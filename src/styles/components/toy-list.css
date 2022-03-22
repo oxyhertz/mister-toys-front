@@ -1,4 +1,9 @@
 .toy-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 350px));
+}
+
+.toy-list li .custom-card{
+  padding: 1.5em;
+  font-size: 12px;
 }

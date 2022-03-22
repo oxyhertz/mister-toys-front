@@ -1,0 +1,29 @@
+.main-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+    padding: 2em;
+    background-color: whitesmoke;
+    box-shadow: 3px 2px 2px -2px grey;
+    margin-bottom: 2em;
+}
+
+
+.main-header .header-nav-container{
+    display: flex;
+    gap:15px
+}
+
+.main-header .header-nav-container a{
+    text-decoration: none;
+    color:black;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.main-header .header-nav-container a:hover{
+    text-decoration: underline;
+    color:antiquewhite;
+}

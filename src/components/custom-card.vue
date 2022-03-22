@@ -19,6 +19,7 @@
   padding: 2em;
   border: 1px solid black;
   border-radius: 5px;
+  height:350px
 }
 
 .custom-card header {
@@ -27,10 +28,14 @@
 
 .custom-card main {
   text-align: center;
+  font-size: 1.5em;
 }
 
 .custom-card footer {
   font-size: 1rem;
   color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

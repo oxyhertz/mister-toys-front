@@ -3,6 +3,7 @@
     <app-header />
     <router-view />
     <app-footer />
+    <!-- <userMsg v-if="msg"></userMsg> -->
   </section>
 </template>
 
@@ -18,6 +19,11 @@ export default {
     clicked() {
       alert('I got clicked!')
     },
+  },
+  computed:{
+    // msg(){
+    //  return this.$store.getters.userMsg
+    // }
   },
   components: {
     appHeader,

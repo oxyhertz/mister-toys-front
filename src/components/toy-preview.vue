@@ -1,12 +1,12 @@
 <template>
-  <li class="toy-preview">
+  <li class="toy-preview" :key="toy._id">
     <custom-card>
       <template #header>
        <h3>{{toy.name}}</h3>
+      </template>
        <p>{{toy.price}}</p>
        <p>{{isOnStock}}</p>
        <p>{{toy._id}}</p>
-      </template>
 
       <template #footer>
         <div class="btn-group">

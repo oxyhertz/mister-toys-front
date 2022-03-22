@@ -27,11 +27,9 @@ export default {
       state.toys = toys;
     },
     removeToy(state, { id }) {
-      console.log(id);
       const idx = state.toys.findIndex(toy => {
         return toy._id === id;
       });
-      console.log(idx);
       state.toys.splice(idx, 1);
     },
     saveToy(state, { toy }) {
@@ -44,21 +42,31 @@ export default {
     },
   },
   actions: {
-    loadToys({ commit, state }) {
+    async loadToys({ commit, state }) {
       console.log('LoadToys');
-      return toyService.query(state.filterBy).then(toys => {
-        commit({ type: 'setToys', toys });
-      });
+      try {
+        const toys = await toyService.query(state.filterBy);
+        return commit({ type: 'setToys', toys });
+      } catch (err) {
+        console.log(err);
+      }
     },
-    removeToy({ commit }, { id }) {
-      toyService.remove(id).then(() => {
+    async removeToy({ commit }, { id }) {
+      try {
+        await toyService.remove(id);
         commit({ type: 'removeToy', id });
-      });
+      } catch (err) {
+        console.log(err);
+      }
     },
-    saveToy({ commit }, { toy }) {
-      toyService.save(toy).then(toy => {
+    async saveToy({ commit }, { savedToy }) {
+      try {
+        console.log(savedToy);
+        const toy = await toyService.save(savedToy);
         commit({ type: 'saveToy', toy });
-      });
+      } catch (err) {
+        console.log(err);
+      }
     },
     filter({ commit, dispatch }, { filterBy }) {
       commit({ type: 'setFilter', filterBy });

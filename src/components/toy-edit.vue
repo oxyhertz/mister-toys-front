@@ -13,16 +13,41 @@
                     <input type="text" v-model="toyToEdit.price">
                 </label>
             </div>
-            <div class="form-control">
+            
+
+            <div>
                 <label>
-                    In Stock
-                    <input type="text" v-model="toyToEdit.name">
+                    In stock?
+                <el-radio-group v-model="toyToEdit.inStock">
+                    <el-radio :label="true">Yes</el-radio>
+                    <el-radio :label="false">No</el-radio>
+                </el-radio-group>
                 </label>
             </div>
+        <div style="display: inline-block; margin-left: 20px">
+          <p style="margin-left: 10px">Labels</p>
+          <el-select
+          
+            v-model="toyToEdit.labels"
+            multiple
+            collapse-tags
+            collapse-tags-tooltip
+            placeholder="Select"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </div>
             <div class="btn-group">
                  <button @click="saveToy" class="">save</button>
                  <button @click="goBack" class="">go back</button>
-            </div>
+            </div>        
+
         </form>
 
 
@@ -31,20 +56,49 @@
 
 <script>
 import { toyService } from "../services/toy-service";
+import {socketService} from '../services/socket.service';
 
     export default{
         name: 'toy-edit',
         data(){
             return{
                 toyToEdit: null,
+                options: [
+                    {
+                    value: 'On wheels',
+                    label: 'On wheels',
+                    },
+                    {
+                    value: 'Box game',
+                    label: 'Box game',
+                    },
+                    {
+                    value: 'Art',
+                    label: 'Art',
+                    },
+                    {
+                    value: 'Baby',
+                    label: 'Baby',
+                    },
+                    {
+                    value: 'Doll',
+                    label: 'Doll',
+                    },
+                    {
+                    value: 'Puzzle',
+                    label: 'Puzzle',
+                    },
+                    {
+                    value: 'Outdoor',
+                    label: 'Outdoor',
+                    },
+                ]
             }
         },
-        created(){
+       async created(){
             const {id} = this.$route.params
             if(id){
-                toyService.getById(id).then(toy => {
-                    this.toyToEdit = toy
-                })
+                this.toyToEdit = await toyService.getById(id)
             }
             else this.toyToEdit = toyService.getEmptyToy();
         },
@@ -52,13 +106,17 @@ import { toyService } from "../services/toy-service";
             goBack(){
                 this.$router.push('/toy')
             },
-            saveToy(){
-                this.$store.dispatch({
+           async saveToy(){
+                try{
+                    await this.$store.dispatch({
                     type: 'saveToy',
-                    toy: this.toyToEdit
-                }).then( () => {
+                    savedToy: this.toyToEdit
+                    })
                     this.$router.push('/toy')
-                } )
+                    // socketService.emit('adminUpdate')
+                }catch(err){
+                    console.log(err)
+                }
             }
         }
     }

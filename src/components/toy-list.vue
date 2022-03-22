@@ -6,7 +6,6 @@
 
 <script>
 import toyPreview from './toy-preview.vue'
-import gsap from 'gsap'
 export default {
   props: {
     toys: {

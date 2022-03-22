@@ -1,8 +1,8 @@
 <template>
-    <section class="dashboard-container">
+    <section v-if="toys" class="dashboard-container">
         <h2>Dashboard</h2>
-        <pricePerTypeChart :data="dataCollectionPrice"/>
-        <toysInStockChart :data="dataCollectionStock" />
+        <pricePerTypeChart :data="fillDataPriceChart"/>
+        <toysInStockChart :data="fillDataStockChart" />
     </section>
 </template>
 
@@ -14,20 +14,6 @@ export default{
     components:{
         pricePerTypeChart,
         toysInStockChart
-    },
-    created(){
-    // this.$store.dispatch({ type: 'loadToys' })
-    },
-     data(){
-        return{
-             dataCollectionPrice: null,
-             dataCollectionStock: null,
-
-        }
-    },
-    mounted(){
-        this.fillDataPriceChart()
-        this.fillDataStockChart()
     },
     computed:{
           labels(){
@@ -59,12 +45,9 @@ export default{
                 },0)
               return ((typeInStockAmmount*100) / this.toys.length).toFixed(2)
             })
-        } 
-        
-      },
-      methods:{
-          fillDataPriceChart(){
-              this.dataCollectionPrice = {
+        }, 
+        fillDataPriceChart(){
+             return  {
                labels: this.$store.getters.labels,
                datasets: [
                   {
@@ -81,7 +64,7 @@ export default{
             }
           },
           fillDataStockChart(){
-            this.dataCollectionStock = {
+            return {
                labels: this.inStockTypes,
                datasets: [
                   {
@@ -98,6 +81,9 @@ export default{
             }
 
           }
+      },
+      methods:{
+          
       }
     
 }
